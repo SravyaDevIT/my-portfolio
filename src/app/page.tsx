@@ -14,18 +14,18 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section - Updated as per your request */}
       <section className="max-w-4xl mx-auto px-6 py-24 text-center">
         <h2 className="text-6xl font-bold mb-6 leading-tight">
           Full-Stack Developer<br />
           Building AI-Powered Web Apps
         </h2>
         <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-          CSE Graduate (2015) • Fast learner with strong coding skills in JavaScript, React, Next.js & Python.<br />
-          Restarting my tech career with focus on Web Development + Artificial Intelligence + Data Science.
+          CSE Graduate (2015)<br />
+          Node.js, React, Next.js & Python | Focused on Full Stack Development, RAG Systems, AI & Data Science
         </p>
         
-        <div className="flex gap-4 justify-center">
+        <div className="flex gap-4 justify-center flex-wrap">
           <a 
             href="https://github.com/SravyaDevIT" 
             target="_blank"
@@ -33,18 +33,18 @@ export default function Home() {
           >
             View GitHub
           </a>
-         <a 
-            href="#" 
+          <a 
+            href="/Sravya_Chindurupu_Resume_2026.pdf" 
+            target="_blank"
             className="border border-white px-8 py-3.5 rounded-full font-medium hover:bg-white hover:text-black transition"
           >
-            Download Resume
+            📄 Download Resume
           </a>
         </div>
       </section>
 
-      {/* Quick Note */}
       <div className="text-center text-gray-500 text-sm pb-12">
-        Portfolio under active development — New AI projects coming soon!
+        Portfolio under active development — New AI + Data Science projects coming soon!
       </div>
     </div>
   );
