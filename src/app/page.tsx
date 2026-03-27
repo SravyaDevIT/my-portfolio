@@ -1,3 +1,5 @@
+import AIChat from './components/AIChat';
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-950 text-white font-sans">
@@ -77,6 +79,7 @@ export default function Home() {
       <div className="text-center text-gray-500 text-sm py-12 border-t border-gray-800">
         Built with Next.js • Actively updating in 2026
       </div>
+      <AIChat />
     </div>
   );
 }
