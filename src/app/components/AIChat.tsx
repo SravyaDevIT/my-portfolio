@@ -4,12 +4,34 @@ import { useState } from 'react';
 
 export default function AIChat() {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([
-    { role: 'assistant', content: "Hi! I'm Noor, Sravya's AI Assistant. Ask me anything about her skills, experience, projects, or tech journey 😊" }
+    { role: 'assistant', content: "Hi! I'm Noor, Sravya's AI Assistant. Ask me anything about her background, skills, projects, or tech journey 😊" }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const sendMessage = async () => {
+  const getMockReply = (userMessage: string) => {
+    const msg = userMessage.toLowerCase();
+
+    if (msg.includes("who are you") || msg.includes("noor")) {
+      return "I'm Noor, Sravya's personal AI assistant. I know everything about her journey and skills!";
+    }
+    if (msg.includes("sravya") || msg.includes("tell me about") || msg.includes("herself")) {
+      return "Sravya is a CSE Graduate (2015) restarting her tech career. She has experience in Full-Stack and IoT development and is now focusing on modern web apps, RAG systems, AI, and Data Science.";
+    }
+    if (msg.includes("skill") || msg.includes("know")) {
+      return "Her main skills are: React, Next.js, Tailwind CSS, Node.js, Python, FastAPI, Pandas, RAG, and strong problem-solving. She's a fast learner!";
+    }
+    if (msg.includes("project") || msg.includes("portfolio")) {
+      return "Right now she's building this beautiful portfolio with me (Noor) inside it! Next projects will be AI Resume Builder and RAG Document Q&A chatbot.";
+    }
+    if (msg.includes("experience") || msg.includes("government") || msg.includes("job")) {
+      return "She worked as IoT Developer and Trainee Software Engineer earlier. Currently she is a Government Servant but actively pivoting back to tech because of her passion for coding and AI.";
+    }
+
+    return "That's a great question! Sravya is really passionate about AI and Full-Stack development. Would you like to know more about her skills or upcoming projects?";
+  };
+
+  const sendMessage = () => {
     if (!input.trim()) return;
 
     const newMessages = [...messages, { role: 'user', content: input }];
@@ -17,35 +39,11 @@ export default function AIChat() {
     setInput('');
     setIsLoading(true);
 
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages }),
-      });
-
-      // ← NEW: Safe JSON parsing
-      let data;
-      try {
-        data = await res.json();
-      } catch (e) {
-        throw new Error("Noor couldn't respond right now. Please try again.");
-      }
-
-      if (data.error) {
-        throw new Error(data.error);
-      }
-
-      setMessages([...newMessages, { role: 'assistant', content: data.reply }]);
-    } catch (error: any) {
-      console.error("Chat error:", error);
-      setMessages([...newMessages, { 
-        role: 'assistant', 
-        content: "Sorry, something went wrong on my side. Please try again later." 
-      }]);
-    } finally {
+    setTimeout(() => {
+      const reply = getMockReply(input);
+      setMessages([...newMessages, { role: 'assistant', content: reply }]);
       setIsLoading(false);
-    }
+    }, 700);
   };
 
   return (

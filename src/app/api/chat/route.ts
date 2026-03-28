@@ -1,27 +1,39 @@
-import { OpenAI } from 'openai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextResponse } from 'next/server';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  try {
+    const { messages } = await req.json();
 
-  const completion = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [
-      {
-        role: 'system',
-        content: `You are Noor, a friendly and professional AI assistant representing Sravya Chindurupu.
-        Sravya is a CSE Graduate (2015) who is restarting her career in Full-Stack Development, AI, and Data Science.
-        She has prior experience as Full-Stack and IoT Developer. She is currently a Government Servant but actively building modern tech projects.
-        Be helpful, warm, and accurate. Always speak as Noor.`
-      },
-      ...messages
-    ],
-    max_tokens: 300,
-  });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
-  return NextResponse.json({ reply: completion.choices[0].message.content });
+    // Build a clean prompt (this avoids the role error completely)
+    const prompt = messages
+      .map((msg: any) => {
+        if (msg.role === 'user') return `User: ${msg.content}`;
+        if (msg.role === 'assistant') return `Noor: ${msg.content}`;
+        return msg.content;
+      })
+      .join('\n\n');
+
+    const result = await model.generateContent(
+      `You are Noor, a friendly and professional AI assistant for Sravya Chindurupu.\n` +
+      `Sravya is a CSE Graduate (2015) restarting her career in Full-Stack Development, AI, and Data Science.\n` +
+      `Be helpful, warm, and accurate. Always reply as Noor.\n\n` +
+      prompt
+    );
+
+    const reply = result.response.text();
+
+    return NextResponse.json({ reply });
+
+  } catch (error: any) {
+    console.error("🚨 Gemini Error:", error);
+    return NextResponse.json(
+      { error: error.message || "Noor is not responding right now" },
+      { status: 500 }
+    );
+  }
 }
