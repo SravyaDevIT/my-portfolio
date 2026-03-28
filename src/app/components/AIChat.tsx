@@ -24,10 +24,25 @@ export default function AIChat() {
         body: JSON.stringify({ messages: newMessages }),
       });
 
-      const data = await res.json();
+      // ← NEW: Safe JSON parsing
+      let data;
+      try {
+        data = await res.json();
+      } catch (e) {
+        throw new Error("Noor couldn't respond right now. Please try again.");
+      }
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
       setMessages([...newMessages, { role: 'assistant', content: data.reply }]);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error("Chat error:", error);
+      setMessages([...newMessages, { 
+        role: 'assistant', 
+        content: "Sorry, something went wrong on my side. Please try again later." 
+      }]);
     } finally {
       setIsLoading(false);
     }
