@@ -44,7 +44,7 @@ export default function Home() {
           I am a passionate CSE Graduate who started my journey as a Full-Stack and IoT Developer. 
           After working in public service, I am now actively restarting my career in tech. 
           I love building intelligent web applications and I'm currently focusing on modern full-stack development, 
-          RAG systems, AI, and Data Science. Fast learner and problem solver — always excited to ship real projects.
+          RAG systems, AI, and Data Science. Fast learner and problem solver and good at logical thinking — always excited to ship real projects.
         </p>
       </section>
 
@@ -57,7 +57,7 @@ export default function Home() {
           <div className="bg-gray-800 p-6 rounded-xl">AI & Data Science: Pandas, scikit-learn, RAG, OpenAI/Gemini</div>
           <div className="bg-gray-800 p-6 rounded-xl">Databases: MongoDB, MySQL, Supabase</div>
           <div className="bg-gray-800 p-6 rounded-xl">Tools: Git, GitHub, Linux</div>
-          <div className="bg-gray-800 p-6 rounded-xl">Soft Skills: Fast Learning, Problem Solving</div>
+          <div className="bg-gray-800 p-6 rounded-xl">Soft Skills: Fast Learning, Problem Solving, Logical Thinking</div>
         </div>
       </section>
 
